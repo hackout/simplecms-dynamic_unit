@@ -1,0 +1,41 @@
+{
+    "name": "simplecms/dynamic_unit",
+    "description": "动态单元组件，可以丰富你的Model，让其具备更多的单元属性，无需对数据表进行多次修改调整， 仅需要简单调用即可让单一Model增加更多可控属性",
+    "keywords": [
+        "laravel",
+        "dynamic_unit",
+        "SKU",
+        "attributes",
+        "simplecms"
+    ],
+    "version": "1.0.1",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "SimpleCMS\\DynamicUnit\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "hackout",
+            "email": "hackout@vip.qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "laravel/framework": ">=11.0"
+    },
+    "require-dev": {
+        "simplecms/framework": ">=1.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SimpleCMS\\DynamicUnit\\DynamicUnitServiceProvider"
+            ],
+            "aliases": {
+                "DynamicUnit": "SimpleCMS\\DynamicUnit\\Facades\\DynamicUnit"
+            }
+        }
+    }
+}
