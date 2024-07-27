@@ -6,6 +6,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use SimpleCMS\Framework\Traits\MediaAttributeTrait;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * DynamicAttribute
@@ -24,7 +25,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  */
 class DynamicAttribute extends Model implements HasMedia
 {
-    use MediaAttributeTrait;
+    use MediaAttributeTrait,HasFactory;
 
     const MEDIA_FILE = 'file';
 

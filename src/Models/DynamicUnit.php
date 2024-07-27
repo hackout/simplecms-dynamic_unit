@@ -3,6 +3,7 @@
 namespace SimpleCMS\DynamicUnit\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * DynamicUnit
@@ -16,7 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DynamicUnit extends Model
 {
-
+    use HasFactory;
+    
     protected $fillable = [
         'name',
         'code',

@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleCMS\Region;
+namespace SimpleCMS\DynamicUnit;
 
 use Illuminate\Support\ServiceProvider;
 use SimpleCMS\Framework\Services\SimpleService;
