@@ -1,8 +1,7 @@
 <?php
 namespace SimpleCMS\DynamicUnit\Packages;
 
-use Illuminate\Http\UploadedFile;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use SimpleCMS\DynamicUnit\Models\DynamicAttribute;
 use SimpleCMS\DynamicUnit\Models\DynamicUnit as DynamicUnitModel;
 
@@ -10,7 +9,7 @@ class DynamicUnit
 {
     /**
      * 获取所有参数
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     public function getAll(): Collection
     {
