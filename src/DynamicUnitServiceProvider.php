@@ -2,19 +2,11 @@
 
 namespace SimpleCMS\Region;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Validator;
-use SimpleCMS\DynamicUnit\Services\DynamicAttributeService;
-use SimpleCMS\Region\Services\DistanceService;
 use SimpleCMS\Framework\Services\SimpleService;
-use SimpleCMS\Region\Validation\Rule\RegionZipRule;
-use SimpleCMS\Region\Validation\Rule\RegionAreaRule;
-use SimpleCMS\Region\Validation\Rule\RegionCodeRule;
-use SimpleCMS\Region\Validation\Rule\RegionNameRule;
-use SimpleCMS\Region\Validation\Rule\RegionNumberRule;
+use SimpleCMS\DynamicUnit\Services\DynamicAttributeService;
 
-class RegionServiceProvider extends ServiceProvider
+class DynamicUnitServiceProvider extends ServiceProvider
 {
 
     /**
