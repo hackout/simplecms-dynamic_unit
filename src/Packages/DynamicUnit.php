@@ -30,7 +30,7 @@ class DynamicUnit
      */
     public function findByCode(string $code)
     {
-        return $this->convertUnit(DynamicUnitModel::where('code', $code)->all())->first();
+        return $this->convertUnit(DynamicUnitModel::where('code', $code)->get())->first();
     }
 
     /**
