@@ -4,7 +4,7 @@ namespace SimpleCMS\DynamicUnit\Packages;
 
 class AttributeModel implements \JsonSerializable
 {
-    protected string $thumbnail = null;
+    protected ?string $thumbnail = null;
 
     public function __construct(public string $name, public string $value, array $thumbnail = [])
     {
@@ -23,7 +23,7 @@ class AttributeModel implements \JsonSerializable
         $data = [
             'name' => $this->name ?? null,
             'value' => $this->value ?? null,
-            'thumbnail' => $this->thumbnail
+            'thumbnail' => $this->thumbnail ?? null
         ];
 
         return $data;
