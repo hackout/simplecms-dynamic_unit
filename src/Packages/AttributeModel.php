@@ -6,7 +6,7 @@ class AttributeModel implements \JsonSerializable
 {
     protected ?string $thumbnail = null;
 
-    public function __construct(public string $name, public string $value, array $thumbnail = [])
+    public function __construct(public int $id, public string $name, public string $value, array $thumbnail = [])
     {
         if (!empty($thumbnail)) {
             $this->thumbnail = $thumbnail['url'];
@@ -21,6 +21,7 @@ class AttributeModel implements \JsonSerializable
     public function toArray(): array
     {
         $data = [
+            'id' => $this->id ?? 0,
             'name' => $this->name ?? null,
             'value' => $this->value ?? null,
             'thumbnail' => $this->thumbnail ?? null

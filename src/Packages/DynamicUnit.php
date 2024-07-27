@@ -19,7 +19,7 @@ class DynamicUnit
     private function convertUnit(Collection $collection)
     {
         return $collection->map(function (DynamicUnitModel $item) {
-            return new DynamicModel($item->name, $item->code, $item->items->map(fn(DynamicAttribute $dynamicAttribute) => new AttributeModel($dynamicAttribute->name, $dynamicAttribute->code,$dynamicAttribute->thumbnail)));
+            return new DynamicModel($item->id, $item->name, $item->code, $item->items->map(fn(DynamicAttribute $dynamicAttribute) => new AttributeModel($dynamicAttribute->id, $dynamicAttribute->name, $dynamicAttribute->code, $dynamicAttribute->thumbnail)));
         });
     }
 
@@ -41,6 +41,17 @@ class DynamicUnit
     public function findListByCode(string $code)
     {
         return $this->findByCode($code)->items;
+    }
+
+    /**
+     * 获取单一属性
+     * @param string $code
+     * @param string $attribute_code
+     * @return mixed
+     */
+    public function findAttributeByCode(string $code, string $attribute_code)
+    {
+        return $this->findListByCode($code)->where('code', $attribute_code)->first();
     }
 
     /**

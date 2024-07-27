@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 class DynamicModel implements \JsonSerializable
 {
 
-    public function __construct(public string $name, public string $value, public null|Collection $items)
+    public function __construct(public int $id, public string $name, public string $value, public null|Collection $items)
     {
     }
 
@@ -18,6 +18,7 @@ class DynamicModel implements \JsonSerializable
     public function toArray(): array
     {
         $data = [
+            'id' => $this->id ?? 0,
             'name' => $this->name ?? null,
             'value' => $this->value ?? null,
             'items' => $this->items ? $this->items->toArray() : null
