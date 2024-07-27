@@ -19,7 +19,7 @@ class DynamicUnit
     private function convertUnit(Collection $collection)
     {
         return $collection->map(function (DynamicUnitModel $item) {
-            return new DynamicModel($item->name, $item->code, $item->items->map(fn(DynamicAttribute $dynamicAttribute) => new AttributeModel($dynamicAttribute->name, $dynamicAttribute->code)));
+            return new DynamicModel($item->name, $item->code, $item->items->map(fn(DynamicAttribute $dynamicAttribute) => new AttributeModel($dynamicAttribute->name, $dynamicAttribute->code,$dynamicAttribute->thumbnail)));
         });
     }
 
@@ -50,9 +50,9 @@ class DynamicUnit
      * @param  array<{name|code|items},int|string|array<{name|code|file},int|string|UploadedFile>>   $array
      * @return bool
      */
-    public function createUnit(array $array):bool
+    public function createUnit(array $array): bool
     {
-        return DynamicQuery::create($array,'unit');
+        return DynamicQuery::create($array, 'unit');
     }
 
     /**
@@ -63,9 +63,9 @@ class DynamicUnit
      * @param  array<{name|code|items},int|string|array<{id|dynamic_unit_id|name|code|file},int|string|UploadedFile>>   $array
      * @return bool
      */
-    public function updateUnit(int $id,array $array):bool
+    public function updateUnit(int $id, array $array): bool
     {
-        return DynamicQuery::update($id,$array,'unit');
+        return DynamicQuery::update($id, $array, 'unit');
     }
 
     /**
@@ -75,11 +75,11 @@ class DynamicUnit
      * @param  int $id
      * @return bool
      */
-    public function deleteUnit(int $id):bool
+    public function deleteUnit(int $id): bool
     {
-        return DynamicQuery::delete($id,'unit');
+        return DynamicQuery::delete($id, 'unit');
     }
-    
+
     /**
      * 创建动态单元值
      *
@@ -87,9 +87,9 @@ class DynamicUnit
      * @param  array<{dynamic_unit_id|name|code|file},int|string|UploadedFile>   $array
      * @return bool
      */
-    public function createAttribute(array $array):bool
+    public function createAttribute(array $array): bool
     {
-        return DynamicQuery::create($array,'attribute');
+        return DynamicQuery::create($array, 'attribute');
     }
 
     /**
@@ -100,9 +100,9 @@ class DynamicUnit
      * @param  array<{dynamic_unit_id|name|code|file},int|string|UploadedFile>   $array
      * @return bool
      */
-    public function updateAttribute(int $id,array $array):bool
+    public function updateAttribute(int $id, array $array): bool
     {
-        return DynamicQuery::update($id,$array,'attribute');
+        return DynamicQuery::update($id, $array, 'attribute');
     }
 
     /**
@@ -112,8 +112,8 @@ class DynamicUnit
      * @param  int $id
      * @return bool
      */
-    public function deleteAttribute(int $id):bool
+    public function deleteAttribute(int $id): bool
     {
-        return DynamicQuery::delete($id,'attribute');
+        return DynamicQuery::delete($id, 'attribute');
     }
 }

@@ -1,13 +1,19 @@
-<?php namespace SimpleCMS\DynamicUnit\Packages;
+<?php
+namespace SimpleCMS\DynamicUnit\Packages;
 
-use Illuminate\Support\Collection;
 
 class AttributeModel implements \JsonSerializable
 {
-    
-    public function __construct(public string $name,public string $value){}
+    protected string $thumbnail = null;
 
-    
+    public function __construct(public string $name, public string $value, array $thumbnail = [])
+    {
+        if (!empty($thumbnail)) {
+            $this->thumbnail = $thumbnail['url'];
+        }
+    }
+
+
     /**
      * toArray
      * @return array<string,null|string>>
@@ -16,7 +22,8 @@ class AttributeModel implements \JsonSerializable
     {
         $data = [
             'name' => $this->name ?? null,
-            'value' => $this->value ?? null
+            'value' => $this->value ?? null,
+            'thumbnail' => $this->thumbnail
         ];
 
         return $data;
