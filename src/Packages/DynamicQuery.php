@@ -41,6 +41,26 @@ class DynamicQuery
     public static function create(array $data, string $type): bool
     {
         $model = self::convertModel($type);
+        list($sql, $file) = self::getFileSql($data, $type);
+        $item = $model::create($sql);
+        if ($file) {
+            $item->addMedia($file)->toMediaCollection($model::MEDIA_FILE);
+        }
+        self::addItems($data, $type, $item);
+        return !empty($item);
+    }
+
+    private static function addItems(array $data, string $type = 'attribute', DynamicUnitModel $dynamicUnit): void
+    {
+        if ($type == 'unit' && array_key_exists('items', $data) && $data['items']) {
+            foreach ($data['items'] as $rs) {
+                self::create(array_merge(['dynamic_unit_id' => $dynamicUnit->id], $rs), 'attribute');
+            }
+        }
+    }
+
+    private static function getFileSql(array $data, string $type = 'attribute'): array
+    {
         $file = null;
         if ($type == 'attribute') {
             $sql = self::convertAttributeSql($data);
@@ -48,17 +68,7 @@ class DynamicQuery
         } else {
             $sql = self::convertUnitSql($data);
         }
-        if ($item = $model::create($sql)) {
-            if ($file) {
-                $item->addMedia($file)->toMediaCollection($model::MEDIA_FILE);
-            }
-        }
-        if ($type == 'unit' && array_key_exists('items', $data) && $data['items']) {
-            foreach ($data['items'] as $rs) {
-                self::create(array_merge(['dynamic_unit_id' => $item->id], $rs), 'attribute');
-            }
-        }
-        return !empty($item);
+        return [$sql, $file];
     }
 
     /**

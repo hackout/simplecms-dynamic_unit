@@ -1,6 +1,7 @@
 <?php
 namespace SimpleCMS\DynamicUnit\Packages;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use SimpleCMS\DynamicUnit\Models\DynamicAttribute;
 use SimpleCMS\DynamicUnit\Models\DynamicUnit as DynamicUnitModel;
@@ -58,7 +59,7 @@ class DynamicUnit
      * 创建动态单元
      *
      * @author Dennis Lui <hackout@vip.qq.com>
-     * @param  array<{name|code|items},int|string|array<{name|code|file},int|string|UploadedFile>>   $array
+     * @param  array<string,int|string|array<string,int|string|UploadedFile>>   $array
      * @return bool
      */
     public function createUnit(array $array): bool
@@ -71,7 +72,7 @@ class DynamicUnit
      *
      * @author Dennis Lui <hackout@vip.qq.com>
      * @param  int $id
-     * @param  array<{name|code|items},int|string|array<{id|dynamic_unit_id|name|code|file},int|string|UploadedFile>>   $array
+     * @param  array<string,int|string|array<string,int|string|UploadedFile>>   $array
      * @return bool
      */
     public function updateUnit(int $id, array $array): bool
@@ -95,7 +96,7 @@ class DynamicUnit
      * 创建动态单元值
      *
      * @author Dennis Lui <hackout@vip.qq.com>
-     * @param  array<{dynamic_unit_id|name|code|file},int|string|UploadedFile>   $array
+     * @param  array<string,int|string|UploadedFile>   $array
      * @return bool
      */
     public function createAttribute(array $array): bool
@@ -108,7 +109,7 @@ class DynamicUnit
      *
      * @author Dennis Lui <hackout@vip.qq.com>
      * @param  int $id
-     * @param  array<{dynamic_unit_id|name|code|file},int|string|UploadedFile>   $array
+     * @param  array<string,int|string|UploadedFile>   $array
      * @return bool
      */
     public function updateAttribute(int $id, array $array): bool

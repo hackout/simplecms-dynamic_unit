@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id 主键
  * @property int $dynamic_attribute_id 单元ID
  * @property string $model_id 关联ID
- * @property ?class-string $model_type 关联类
+ * @property ?string<class-string> $model_type 关联类
  * @property array $extra 自定义参数
  * 
  * @property-read ?\Carbon\Carbon $created_at 创建时间
@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class CustomAttribute extends Model implements HasMedia
 {
-    use MediaAttributeTrait,HasFactory;
+    use MediaAttributeTrait, HasFactory;
     protected $fillable = [
         'dynamic_attribute_id',
         'model_id',
