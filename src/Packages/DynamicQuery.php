@@ -59,6 +59,20 @@ class DynamicQuery
         }
     }
 
+    private static function updateItems(array $data, string $type = 'attribute', DynamicUnitModel $dynamicUnit): void
+    {
+        if ($type == 'unit' && array_key_exists('items', $data) && $data['items']) {
+            self::removeUnderId($dynamicUnit, $data['items']);
+            foreach ($data['items'] as $rs) {
+                if (array_key_exists('id', $rs) && $rs['id']) {
+                    self::update((int) $rs['id'], array_merge(['dynamic_unit_id' => $dynamicUnit->id], $rs), 'attribute');
+                } else {
+                    self::create(array_merge(['dynamic_unit_id' => $dynamicUnit->id], $rs), 'attribute');
+                }
+            }
+        }
+    }
+
     private static function getFileSql(array $data, string $type = 'attribute'): array
     {
         $file = null;
@@ -85,30 +99,14 @@ class DynamicQuery
         if (!$item = $model::find($id)) {
             return false;
         }
-        $file = null;
-        if ($type == 'attribute') {
-            $sql = self::convertAttributeSql($data);
-            $file = self::pullFile($data);
-        } else {
-            $sql = self::convertUnitSql($data);
-        }
+        list($sql, $file) = self::getFileSql($data, $type);
         $item->fill($sql);
-        if ($result = $item->save()) {
-            if ($file) {
-                $item->media && $item->media->each(fn($media) => $media->delete());
-                $item->addMedia($file)->toMediaCollection($model::MEDIA_FILE);
-            }
+        $result = $item->save();
+        if ($file) {
+            $item->media && $item->media->each(fn($media) => $media->delete());
+            $item->addMedia($file)->toMediaCollection($model::MEDIA_FILE);
         }
-        if ($type == 'unit' && array_key_exists('items', $data) && $data['items']) {
-            self::removeUnderId($item, $data['items']);
-            foreach ($data['items'] as $rs) {
-                if (array_key_exists('id', $rs) && $rs['id']) {
-                    self::update((int) $rs['id'], array_merge(['dynamic_unit_id' => $item->id], $rs), 'attribute');
-                } else {
-                    self::create(array_merge(['dynamic_unit_id' => $item->id], $rs), 'attribute');
-                }
-            }
-        }
+        self::addItems($data, $type, $item);
         return $result;
     }
 
