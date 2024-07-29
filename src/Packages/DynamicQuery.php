@@ -64,12 +64,17 @@ class DynamicQuery
         if ($type == 'unit' && array_key_exists('items', $data) && $data['items']) {
             self::removeUnderId($dynamicUnit, $data['items']);
             foreach ($data['items'] as $rs) {
-                if (array_key_exists('id', $rs) && $rs['id']) {
-                    self::update((int) $rs['id'], array_merge(['dynamic_unit_id' => $dynamicUnit->id], $rs), 'attribute');
-                } else {
-                    self::create(array_merge(['dynamic_unit_id' => $dynamicUnit->id], $rs), 'attribute');
-                }
+                self::createOrUpdateAttribute($rs, $dynamicUnit);
             }
+        }
+    }
+
+    private static function createOrUpdateAttribute(array $data, DynamicUnitModel $dynamicUnitModel)
+    {
+        if (array_key_exists('id', $data) && $data['id']) {
+            self::update((int) $data['id'], array_merge(['dynamic_unit_id' => $dynamicUnitModel->id], $data), 'attribute');
+        } else {
+            self::create(array_merge(['dynamic_unit_id' => $dynamicUnitModel->id], $data), 'attribute');
         }
     }
 
@@ -128,17 +133,19 @@ class DynamicQuery
     private static function convertSql(array $data): array|bool
     {
         $sql = [];
-        if (array_key_exists('name', $data) && trim($data['name'])) {
-            $sql['name'] = trim($data['name']);
-        }
-        if (array_key_exists('code', $data) && trim($data['code'])) {
-            $sql['code'] = trim($data['code']);
-        }
-        if (!$sql)
+        $map = array_merge([
+            'file' => null,
+            'id' => null,
+            'name' => null,
+            'code' => null
+        ], $data);
+        if (!$map['name'] && !$map['code'])
             return false;
-        $file = array_key_exists("file", $data) ? $data['file'] : null;
-        $id = array_key_exists("id", $data) ? $data['id'] : null;
-        return [$sql, $file, $id];
+        if ($map['name'])
+            $sql['name'] = $map['name'];
+        if ($map['code'])
+            $sql['code'] = $map['code'];
+        return [$sql, $map['file'], $map['id']];
     }
 
     private static function pullFile(array $data): null|UploadedFile
